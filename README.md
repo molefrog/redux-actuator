@@ -14,10 +14,11 @@ you have an `<IframePreview>` component and you need to manually reload it when 
 is clicked. One possible way to achieve that is to introduce an integer prop `version` 
 and increment it on click.
 
-  > here be an image
+![](assets/actuate-iframe.gif)
 
 The `<IframePreview>` external interface remains pure while its internal implementation uses
-[`componentDidUpdate`](https://facebook.github.io/react/docs/react-component.html#componentdidmount) callback in order to detect `version` changes and reload the iframe:
+[`componentDidUpdate`](https://facebook.github.io/react/docs/react-component.html#componentdidmount) callback in 
+order to detect `version` changes and reload the iframe:
 
 ```JavaScript
 class IframePreview extends Component {
