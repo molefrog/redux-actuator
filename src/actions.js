@@ -5,11 +5,18 @@ const currentTimestamp = () => (new Date()).getTime()
 export const ACTUATE = 'redux-actuator/ACTUATE'
 
 // Action creators
-export const actuate = (channel, event, eventData = {}) => {
+export const actuate = (channel, eventType, ...args) => {
   const timestamp = currentTimestamp()
 
   return {
     type: ACTUATE,
-    payload: { timestamp, channel, event, eventData }
+    payload: {
+      channel,
+      event: {
+        type: eventType,
+        timestamp,
+        args
+      }
+    }
   }
 }

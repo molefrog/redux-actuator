@@ -13,7 +13,7 @@ describe('reducer', () => {
     const state = reducer({},
       {
         type: ACTUATE,
-        payload: { channel: 'm00t', timestamp: 1337 }
+        payload: { channel: 'm00t', event: { timestamp: 1337 } }
       })
 
     expect(state.m00t).toBeTruthy()

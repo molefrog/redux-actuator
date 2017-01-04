@@ -4,6 +4,7 @@ const createReducer = (engine) =>
   (state = {}, action) => {
     if (action.type === ACTUATE) {
       const { channel, ...rest } = action.payload || {}
+      const event = rest.event || {}
 
       // Channel isn't given, ignore
       if (!channel) {
@@ -12,7 +13,7 @@ const createReducer = (engine) =>
 
       return {
         ...state,
-        [channel]: rest
+        [channel]: event
       }
     }
     return state

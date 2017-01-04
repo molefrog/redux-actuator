@@ -10,7 +10,6 @@ const createEngine = (options = {}) => {
   }
 
   const reducer = createReducer(engine)
-
   return { ...engine, reducer }
 }
 
