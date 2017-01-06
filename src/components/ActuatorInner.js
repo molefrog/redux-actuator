@@ -20,14 +20,21 @@ export class ActuatorInner extends React.Component {
 
     const { deltaError } = this.props
 
-    // This needs better clarification!
+    // Special case when the event was dispatched before
+    // the mount. If you need to handle cases like
+    // this one, pass `deltaError` prop, which literally means:
+    // "handle missed events on mount if it's younger than `deltaError`"
+    let shouldHandleOnMount = false
+
     if (options.onMount && deltaError) {
       const now = currentTimestamp()
       const delta = Math.abs(now - event.timestamp)
 
-      if (delta > deltaError) {
-        return
-      }
+      shouldHandleOnMount = delta <= deltaError
+    }
+
+    if (options.onMount && !shouldHandleOnMount) {
+      return
     }
 
     const eventHandlers = this.props.handlers || {}

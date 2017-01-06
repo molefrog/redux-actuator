@@ -5,6 +5,8 @@ import { Provider } from 'react-redux'
 
 import createEngine, { actuate, Actuator } from '../index'
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
 const createStore = () => {
   const engine = createEngine()
   const reducer = combineReducers({ actuator: engine.reducer })
@@ -40,5 +42,21 @@ describe('Actuator component', () => {
     store.dispatch(actuate('default', 'foo'))
 
     expect(eventHandler).toHaveBeenCalledTimes(2)
+  })
+
+  it('doesnt handle event dispatched before component render', () => {
+    const store = createStore()
+    const eventHandler = jest.fn()
+
+    store.dispatch(actuate('default', 'foo'))
+
+    return delay(30).then(() => {
+      mount(
+        <Provider store={store}>
+          <Actuator events={{foo: eventHandler}} />
+        </Provider>)
+
+      expect(eventHandler).not.toHaveBeenCalled()
+    })
   })
 })
