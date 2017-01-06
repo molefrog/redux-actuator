@@ -36,10 +36,71 @@ and action creator which isn't a problem for one component but becomes repetitiv
 and listening components. **Redux Actuator** aims to hide this logic and provide declarative API for event
 handling inside components.
 
-## Usage
-TBD
 ## Installation
+Redux Actuator is distributed as an NPM package:
+
+```
+npm install --save redux-actuator
+```
+
+Here how Redux Actuator is injected into Redux store:
+```JavaScript
+  import createEngine from 'redux-actuator'
+  
+  const engine = createEngine()
+  
+  const reducer = combineReducers({
+    // It's important for the reducer to be mounted at `actuator`
+    // If you'd like to set up different mounting point see Configuration section.
+    actuator: engine.reducer,
+    
+    // ... your other reducers
+  })
+```
+That's it! Now we are ready to actuate!
+
+## Simpliest Actuator
+One common use case for an actuator are state-free animations. Say, you want to animate this talking head:
+
+![](assets/talking-guy.gif)
+
+```JavaScript
+  import { Actuator } from 'redux-actuator'
+  
+  class ThisGuy extends React.Component {
+  
+    saySomething (phrase) {
+      // your animation goes here
+    }
+  
+    render () {
+     
+      // Actuator can wrap other components for brevity
+      return (
+        <Actuator events={{ say: (phrase) => this.saySomething(phrase)}}>
+          <div>
+            ...
+          </div>
+        </Actuator>
+      )
+    }
+  }
+```
+
+How we are ready to trigger actions from the bussiness-logic part of the app:
+
+```JavaScript
+  import { actuate } from 'redux-actuator'
+  
+  // First argument is a channel
+  store.dispatch(actuate('default', 'say', 'Hello!')
+  store.dispatch(actuate('default', 'say', 'Hello!')
+```
+
+## Using Channels
 TBD
+![](assets/talking-guys.gif)
+
 
 ## License
 Copyright 2017, Alexey Taktarov <molefrog@gmail.com>
