@@ -78,4 +78,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# End of https://www.gitignore.io/api/sdf,node,osx
+# Project-specific ignore
+dist/redux-actuator.dev.js
