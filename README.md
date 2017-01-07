@@ -27,7 +27,6 @@ class IframePreview extends Component {
       this.reloadIframe()
     }
   }
-  // ...
 }
 ```
 When the app gets bigger the good idea is to move this counter to global state so you can control the
@@ -46,43 +45,44 @@ npm install --save redux-actuator
 Here how Redux Actuator is injected into Redux store:
 ```JavaScript
   import createEngine from 'redux-actuator'
-  
+
   const engine = createEngine()
-  
+
   const reducer = combineReducers({
     // It's important for the reducer to be mounted at `actuator`
     // If you'd like to set up different mounting point see Configuration section.
     actuator: engine.reducer,
-    
+
     // ... your other reducers
   })
 ```
 That's it! Now we are ready to actuate!
 
 ## Simpliest Actuator
-One common use case for an actuator are state-free animations. Say, you want to animate this talking head:
+One common use case for an actuator are state-free animations. Say, you want to animate
+this talking head:
 
 ![](assets/talking-guy.gif)
 
+In order to do that simply put `<Actuator>` component and specify how events should be handled:
+
 ```JavaScript
   import { Actuator } from 'redux-actuator'
-  
+
   class ThisGuy extends React.Component {
-  
     saySomething (phrase) {
-      // your animation goes here
+      // animation, DOM manipulation etc.
     }
-  
+
     render () {
-     
-      // Actuator can wrap other components for brevity
+      // Actuator can wrap other components for brevity,
+      // or can be used in a self-closing form <Actuator />
       return (
-        <Actuator events={{ say: (phrase) => this.saySomething(phrase)}}>
+        <Actuator events={{ say: (phrase) => this.saySomething(phrase) }}>
           <div>
             ...
           </div>
-        </Actuator>
-      )
+        </Actuator>)
     }
   }
 ```
@@ -91,16 +91,35 @@ How we are ready to trigger actions from the bussiness-logic part of the app:
 
 ```JavaScript
   import { actuate } from 'redux-actuator'
-  
-  // First argument is a channel
-  store.dispatch(actuate('default', 'say', 'Hello!')
-  store.dispatch(actuate('default', 'say', 'Hello!')
+
+  // First argument is name of the event,
+  // the rest is interpreted as event arguments
+  store.dispatch(actuate('say', 'Hola!')
+  store.dispatch(actuate('say', 'Hello!')
 ```
 
 ## Using Channels
-TBD
+In the next example we now have 4 talking heads and we would like to trigger
+`'say'` event for a specific head:
+
 ![](assets/talking-guys.gif)
 
+Actuator provides support for channels. Channels can be useful if you'd like to
+distinguish similar events passed for different components:
+
+```JavaScript
+  // If you don't specify a channel, 'default' will be used
+  <Actuator
+    channel='gustav'
+    events={{ say: (phrase) => this.saySomething(phrase) }} />
+
+
+  import { actuateChannel } from 'redux-actuator'
+
+  // actuateChanell is an action creator-creator
+  const actuateGustav = actuateChannel('gustav')
+  store.dispatch(actuateGustav('say', 'Goeiedag!'))
+```
 
 ## License
 Copyright 2017, Alexey Taktarov <molefrog@gmail.com>
