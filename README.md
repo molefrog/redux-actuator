@@ -1,4 +1,6 @@
 # Redux Actuator
+[![Build Status](https://travis-ci.org/molefrog/redux-actuator.svg?branch=master)](https://travis-ci.org/molefrog/redux-actuator)
+
 Trigger events inside components by reacting on pure state changes. Actuator keeps you from writing
 component lifecycle hooks boilerplate code by providing declarative API.
 
