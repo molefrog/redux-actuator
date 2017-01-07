@@ -1,0 +1,17 @@
+language: node_js
+
+node_js:
+  - "6"
+  - "7"
+
+sudo: false
+
+install:
+  - npm install
+
+cache:
+  directories:
+    - ".eslintcache"
+    - "node_modules"
+
+script: npm test
