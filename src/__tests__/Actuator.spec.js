@@ -25,7 +25,7 @@ describe('Actuator component', () => {
         <Actuator events={{foo: eventHandler}} />
       </Provider>)
 
-    store.dispatch(actuate('default', 'foo', 1, 2, 3))
+    store.dispatch(actuate('foo', 1, 2, 3))
     expect(eventHandler).toHaveBeenCalledWith(1, 2, 3)
   })
 
@@ -38,8 +38,8 @@ describe('Actuator component', () => {
         <Actuator events={{foo: eventHandler}} />
       </Provider>)
 
-    store.dispatch(actuate('default', 'foo'))
-    store.dispatch(actuate('default', 'foo'))
+    store.dispatch(actuate('foo'))
+    store.dispatch(actuate('foo'))
 
     expect(eventHandler).toHaveBeenCalledTimes(2)
   })
@@ -48,7 +48,7 @@ describe('Actuator component', () => {
     const store = createStore()
     const eventHandler = jest.fn()
 
-    store.dispatch(actuate('default', 'foo'))
+    store.dispatch(actuate('foo'))
 
     return delay(30).then(() => {
       mount(
