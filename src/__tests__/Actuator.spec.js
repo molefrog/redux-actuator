@@ -60,7 +60,7 @@ describe('Actuator component', () => {
     })
   })
 
-  it('should handle event onMount with timestamp younger than with deltaError', () => {
+  it('should handle event onMount with timestamp younger than deltaError', () => {
     const store = createStore()
     const eventHandler = jest.fn()
 
@@ -76,7 +76,7 @@ describe('Actuator component', () => {
     })
   })
 
-    it('doesnt handle event onMount with timestamp older than with deltaError', () => {
+  it('doesnt handle event onMount with timestamp older than deltaError', () => {
     const store = createStore()
     const eventHandler = jest.fn()
 
