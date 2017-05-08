@@ -1,6 +1,6 @@
 import React from 'react'
 
-import currentTimestamp from '../utils/currentTimestamp'
+import { currentTimestamp } from '../utils/currentTimestamp'
 
 // ActuatorInner is an auxiliary component used internally
 // by Actuator component.

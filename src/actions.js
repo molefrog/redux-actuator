@@ -1,5 +1,4 @@
-
-const currentTimestamp = () => (new Date()).getTime()
+import { currentTimestamp } from './utils/currentTimestamp'
 
 // Actions
 export const ACTUATE = 'redux-actuator/ACTUATE'
