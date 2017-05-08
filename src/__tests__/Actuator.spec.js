@@ -59,4 +59,36 @@ describe('Actuator component', () => {
       expect(eventHandler).not.toHaveBeenCalled()
     })
   })
+
+  it('should handle event onMount with timestamp younger than with deltaError', () => {
+    const store = createStore()
+    const eventHandler = jest.fn()
+
+    store.dispatch(actuate('baz'))
+
+    return delay(30).then(() => {
+      mount(
+        <Provider store={store}>
+          <Actuator events={{baz: eventHandler}} deltaError={40} />
+        </Provider>)
+
+      expect(eventHandler).toHaveBeenCalled()
+    })
+  })
+
+    it('doesnt handle event onMount with timestamp older than with deltaError', () => {
+    const store = createStore()
+    const eventHandler = jest.fn()
+
+    store.dispatch(actuate('bar'))
+
+    return delay(30).then(() => {
+      mount(
+        <Provider store={store}>
+          <Actuator events={{bar: eventHandler}} deltaError={25} />
+        </Provider>)
+
+      expect(eventHandler).not.toHaveBeenCalled()
+    })
+  })
 })
