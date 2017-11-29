@@ -1,11 +1,17 @@
-import { mount } from 'enzyme'
+import 'raf/polyfill'
+
+import Enzyme, { mount } from 'enzyme'
 import React from 'react'
 import { createStore as createReduxStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
+import Adapter from 'enzyme-adapter-react-16'
+import 'raf/polyfill'
+
+Enzyme.configure({ adapter: new Adapter() })
 
 import createEngine, { actuate, Actuator } from '../index'
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const createStore = () => {
   const engine = createEngine()
@@ -22,8 +28,9 @@ describe('Actuator component', () => {
 
     mount(
       <Provider store={store}>
-        <Actuator events={{foo: eventHandler}} />
-      </Provider>)
+        <Actuator events={{ foo: eventHandler }} />
+      </Provider>
+    )
 
     store.dispatch(actuate('foo', 1, 2, 3))
     expect(eventHandler).toHaveBeenCalledWith(1, 2, 3)
@@ -35,8 +42,9 @@ describe('Actuator component', () => {
 
     mount(
       <Provider store={store}>
-        <Actuator events={{foo: eventHandler}} />
-      </Provider>)
+        <Actuator events={{ foo: eventHandler }} />
+      </Provider>
+    )
 
     store.dispatch(actuate('foo'))
     store.dispatch(actuate('foo'))
@@ -53,8 +61,9 @@ describe('Actuator component', () => {
     return delay(30).then(() => {
       mount(
         <Provider store={store}>
-          <Actuator events={{foo: eventHandler}} />
-        </Provider>)
+          <Actuator events={{ foo: eventHandler }} />
+        </Provider>
+      )
 
       expect(eventHandler).not.toHaveBeenCalled()
     })
@@ -69,8 +78,9 @@ describe('Actuator component', () => {
     return delay(30).then(() => {
       mount(
         <Provider store={store}>
-          <Actuator events={{baz: eventHandler}} deltaError={40} />
-        </Provider>)
+          <Actuator events={{ baz: eventHandler }} deltaError={40} />
+        </Provider>
+      )
 
       expect(eventHandler).toHaveBeenCalled()
     })
@@ -85,8 +95,9 @@ describe('Actuator component', () => {
     return delay(30).then(() => {
       mount(
         <Provider store={store}>
-          <Actuator events={{bar: eventHandler}} deltaError={25} />
-        </Provider>)
+          <Actuator events={{ bar: eventHandler }} deltaError={25} />
+        </Provider>
+      )
 
       expect(eventHandler).not.toHaveBeenCalled()
     })

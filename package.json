@@ -5,7 +5,12 @@
   "version": "1.0.0",
   "repository": "molefrog/redux-actuator",
   "description": "Communicate between components through Redux store",
-  "keywords": ["react", "redux", "pub-sub", "events"],
+  "keywords": [
+    "react",
+    "redux",
+    "pub-sub",
+    "events"
+  ],
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
@@ -14,25 +19,34 @@
     "prepublish-lib": "rm -rf lib && babel src --out-dir lib"
   },
   "standard": {
-    "globals": ["jest", "test", "expect", "it", "describe"]
+    "globals": [
+      "jest",
+      "test",
+      "expect",
+      "it",
+      "describe"
+    ]
   },
   "jest": {
-    "testPathDirs": ["./src"]
+    "testPathDirs": [
+      "./src"
+    ]
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-jest": "^18.0.0",
     "babel-plugin-transform-object-rest-spread": "^6.20.2",
-    "babel-preset-react": "^6.16.0",
     "babel-preset-env": "^1.6.1",
-    "enzyme": "^2.7.0",
+    "babel-preset-react": "^6.16.0",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.0",
     "jest": "^18.1.0",
-    "react": "^15.4.1",
-    "react-addons-test-utils": "^15.4.1",
-    "react-dom": "^15.4.1",
-    "react-redux": "^5.0.1",
-    "redux": "^3.6.0"
+    "raf": "^3.4.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
   },
   "peerDependencies": {
     "react": ">= 0.14.0",
