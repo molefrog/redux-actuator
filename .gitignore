@@ -78,5 +78,3 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Project-specific ignore
-dist/redux-actuator.dev.js

@@ -6,11 +6,11 @@
   "repository": "molefrog/redux-actuator",
   "description": "Communicate between components through Redux store",
   "keywords": ["react", "redux", "pub-sub", "events"],
-  "main": "dist/redux-actuator.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watch",
-    "build": "NODE_ENV=production webpack --config=webpack.config.js"
+    "build": "babel src --out-dir lib"
   },
   "standard": {
     "globals": ["jest", "test", "expect", "it", "describe"]
@@ -19,9 +19,8 @@
     "testPathDirs": ["./src"]
   },
   "devDependencies": {
-    "babel-core": "^6.0.0",
+    "babel-core": "^6.26.0",
     "babel-jest": "^18.0.0",
-    "babel-loader": "^6.2.10",
     "babel-plugin-transform-object-rest-spread": "^6.20.2",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
@@ -31,8 +30,7 @@
     "react-addons-test-utils": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-redux": "^5.0.1",
-    "redux": "^3.6.0",
-    "webpack": "^1.14.0"
+    "redux": "^3.6.0"
   },
   "peerDependencies": {
     "react": ">= 0.14.0",
@@ -40,6 +38,7 @@
     "redux": "^2.0.0 || ^3.0.0"
   },
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "prop-types": "^15.5.10"
   }
 }
