@@ -10,7 +10,8 @@
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watch",
-    "build": "babel src --out-dir lib"
+    "build": "babel src --out-dir lib",
+    "prepublish": "rm -rf lib && babel src --out-dir lib"
   },
   "standard": {
     "globals": ["jest", "test", "expect", "it", "describe"]

@@ -1,7 +1,6 @@
 
-# Created by https://www.gitignore.io/api/sdf,node,osx
-
-#!! ERROR: sdf is undefined. Use list command to see defined gitignore types !!#
+# Transpiled sources
+lib
 
 ### Node ###
 # Logs
