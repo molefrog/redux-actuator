@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { currentTimestamp } from '../utils/currentTimestamp'
 
@@ -8,13 +9,16 @@ import { currentTimestamp } from '../utils/currentTimestamp'
 // change passed as a prop.
 
 export class ActuatorInner extends React.Component {
-  checkEvents (prevProps, options = {}) {
+  checkEvents(prevProps, options = {}) {
     // current and previous event payloads
     const prevEvent = prevProps.event || {}
     const event = this.props.event || {}
 
-    if ((event.type && prevEvent.type === event.type) &&
-      (event.timestamp && prevEvent.timestamp === event.timestamp)) {
+    if (
+      event.type &&
+      prevEvent.type === event.type &&
+      (event.timestamp && prevEvent.timestamp === event.timestamp)
+    ) {
       return
     }
 
@@ -43,24 +47,24 @@ export class ActuatorInner extends React.Component {
     }
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     this.checkEvents(prevProps)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.checkEvents({}, { onMount: true })
   }
 
-  render () {
+  render() {
     if (!this.props.children) return null
     return this.props.children
   }
 }
 
 ActuatorInner.propTypes = {
-  handlers: React.PropTypes.object.isRequired,
-  deltaError: React.PropTypes.number,
-  event: React.PropTypes.object
+  handlers: PropTypes.object.isRequired,
+  deltaError: PropTypes.number,
+  event: PropTypes.object
 }
 
 export default ActuatorInner
