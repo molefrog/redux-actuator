@@ -3,9 +3,11 @@ import { currentTimestamp } from './utils/currentTimestamp'
 // Actions
 export const ACTUATE = 'redux-actuator/ACTUATE'
 
-export const actuate = (channel, ...args) => {
-  const timestamp = currentTimestamp()
+let clock = 0
 
+const genKey = (ts, clock) => `${ts}::${clock}`
+
+export const actuate = (channel, ...args) => {
   // channel has to be specified
   if (!channel) {
     const warning =
@@ -16,9 +18,13 @@ export const actuate = (channel, ...args) => {
     console.warn(warning)
   }
 
+  const timestamp = currentTimestamp()
+  clock += 1
+
   return {
     type: ACTUATE,
     payload: {
+      key: genKey(timestamp, clock),
       channel,
       timestamp,
       args

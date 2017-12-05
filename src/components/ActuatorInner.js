@@ -14,7 +14,8 @@ export class ActuatorInner extends React.Component {
     const prevEvent = prevProps.event || {}
     const event = this.props.event || {}
 
-    if (event.timestamp && prevEvent.timestamp === event.timestamp) {
+    // Compare event keys (they have to be unique)
+    if (event.key && prevEvent.key === event.key) {
       return
     }
 
