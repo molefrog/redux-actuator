@@ -11,17 +11,16 @@ describe('ActuatorInner component', () => {
   it('should not trigger any events on mount', () => {
     const eventHandler = jest.fn()
 
-    mount(<ActuatorInner handlers={{ foo: eventHandler }} />)
+    mount(<ActuatorInner handler={eventHandler} />)
     expect(eventHandler).not.toHaveBeenCalled()
   })
 
   it('should invoke an event handler on event type change', () => {
     const eventHandler = jest.fn()
 
-    const wrapper = mount(<ActuatorInner handlers={{ foo: eventHandler }} />)
+    const wrapper = mount(<ActuatorInner handler={eventHandler} />)
     wrapper.setProps({
       event: {
-        type: 'foo',
         timestamp: 1,
         args: ['bar', 1337]
       }

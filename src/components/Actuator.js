@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import ActuatorInner from './ActuatorInner'
 
-const Actuator = ({ event, events, ...props }) => (
-  <ActuatorInner event={event} handlers={events} {...props} />
+const Actuator = ({ event, onTrigger, ...props }) => (
+  <ActuatorInner event={event} handler={onTrigger} {...props} />
 )
 
 const mapStateToProps = (state, ownProps) => {
@@ -18,12 +18,8 @@ const mapStateToProps = (state, ownProps) => {
 const WrappedActuator = connect(mapStateToProps)(Actuator)
 
 WrappedActuator.propTypes = {
-  channel: PropTypes.string,
-  events: PropTypes.object.isRequired
-}
-
-WrappedActuator.defaultProps = {
-  channel: 'default'
+  channel: PropTypes.string.isRequired,
+  onTrigger: PropTypes.func
 }
 
 export default WrappedActuator

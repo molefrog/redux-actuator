@@ -3,23 +3,25 @@ import { currentTimestamp } from './utils/currentTimestamp'
 // Actions
 export const ACTUATE = 'redux-actuator/ACTUATE'
 
-const actuateFactory = (channel) =>
-  (eventType, ...args) => {
-    const timestamp = currentTimestamp()
+export const actuate = (channel, ...args) => {
+  const timestamp = currentTimestamp()
 
-    return {
-      type: ACTUATE,
-      payload: {
-        channel,
-        event: {
-          type: eventType,
-          timestamp,
-          args
-        }
-      }
-    }
+  // channel has to be specified
+  if (!channel) {
+    const warning =
+      'Triggering actions without a channel is no longer ' +
+      'supported by `redux-actuator`. These actions will be ' +
+      'ingored by the actuator.'
+
+    console.warn(warning)
   }
 
-// Action creators
-export const actuate = actuateFactory('default')
-export const actuateChannel = actuateFactory
+  return {
+    type: ACTUATE,
+    payload: {
+      channel,
+      timestamp,
+      args
+    }
+  }
+}

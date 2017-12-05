@@ -14,11 +14,7 @@ export class ActuatorInner extends React.Component {
     const prevEvent = prevProps.event || {}
     const event = this.props.event || {}
 
-    if (
-      event.type &&
-      prevEvent.type === event.type &&
-      (event.timestamp && prevEvent.timestamp === event.timestamp)
-    ) {
+    if (event.timestamp && prevEvent.timestamp === event.timestamp) {
       return
     }
 
@@ -41,10 +37,7 @@ export class ActuatorInner extends React.Component {
       return
     }
 
-    const eventHandlers = this.props.handlers || {}
-    if (eventHandlers[event.type]) {
-      eventHandlers[event.type](...event.args)
-    }
+    this.props.handler(...event.args)
   }
 
   componentDidUpdate(prevProps) {
@@ -62,7 +55,7 @@ export class ActuatorInner extends React.Component {
 }
 
 ActuatorInner.propTypes = {
-  handlers: PropTypes.object.isRequired,
+  handler: PropTypes.func.isRequired,
   deltaError: PropTypes.number,
   event: PropTypes.object
 }
