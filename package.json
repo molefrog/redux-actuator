@@ -5,12 +5,7 @@
   "version": "1.0.0",
   "repository": "molefrog/redux-actuator",
   "description": "Communicate between components through Redux store",
-  "keywords": [
-    "react",
-    "redux",
-    "pub-sub",
-    "events"
-  ],
+  "keywords": ["react", "redux", "pub-sub", "events"],
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
@@ -19,18 +14,10 @@
     "prepublish-lib": "rm -rf lib && babel src --out-dir lib"
   },
   "standard": {
-    "globals": [
-      "jest",
-      "test",
-      "expect",
-      "it",
-      "describe"
-    ]
+    "globals": ["jest", "test", "expect", "it", "describe"]
   },
   "jest": {
-    "testPathDirs": [
-      "./src"
-    ]
+    "testPathDirs": ["./src"]
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -50,7 +37,6 @@
   },
   "peerDependencies": {
     "react": ">= 0.14.0",
-    "react-redux": ">= 4.0.0",
     "redux": "^2.0.0 || ^3.0.0"
   },
   "dependencies": {
