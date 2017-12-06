@@ -4,28 +4,31 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { currentTimestamp } from '../utils/currentTimestamp'
 
-// Actuator is an auxiliary component used internally
-// by Actuator component.
-// It has no connection to the store, it only responds to an event
-// change passed as a prop.
 export class Actuator extends React.Component {
   constructor(props, context) {
     super(props, context)
-    this.onStateChanged = this.onStateChanged.bind(this)
 
+    // Used to store last visible keys on per-channel basis
+    // format channel -> last key
     this._keyCache = {}
   }
 
-  onStateChanged() {
-    const event = this.getEvent(this.context.store)
-    event && this.checkEvent(this.props.channel, event)
+  getObservedChannels() {
+    return [this.props.channel]
   }
 
-  getEvent(store) {
-    const state = store.getState()
-
+  onStateChanged(state = null, ...restOpts) {
+    state = state || this.context.store.getState()
     if (!state.actuator) return null
-    return state.actuator[this.props.channel]
+
+    const channels = this.getObservedChannels()
+
+    for (let i = 0, chan = channels[i]; i < channels.length; ++i) {
+      const event = state.actuator[chan]
+
+      if (!event) continue
+      this.checkEvent(chan, event, ...restOpts)
+    }
   }
 
   checkEvent(channel, event, options = {}) {
@@ -62,10 +65,11 @@ export class Actuator extends React.Component {
     const store = this.context.store
 
     if (store) {
-      this._sub = store.subscribe(this.onStateChanged)
-      const event = this.getEvent(store)
+      this._sub = store.subscribe(() => this.onStateChanged())
 
-      event && this.checkEvent(this.props.channel, event, { onMount: true })
+      // trigger on mount check
+      const state = store.getState()
+      this.onStateChanged(state, { onMount: true })
     }
   }
 
