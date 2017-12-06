@@ -13,8 +13,18 @@ export class Actuator extends React.Component {
     this._keyCache = {}
   }
 
+  getChanHandlers() {
+    const { on, channel } = this.props
+
+    if (typeof on === 'function') {
+      return { [channel]: on }
+    }
+
+    return on
+  }
+
   getObservedChannels() {
-    return [this.props.channel]
+    return Object.keys(this.getChanHandlers())
   }
 
   onStateChanged(state = null, ...restOpts) {
@@ -23,12 +33,18 @@ export class Actuator extends React.Component {
 
     const channels = this.getObservedChannels()
 
-    for (let i = 0, chan = channels[i]; i < channels.length; ++i) {
+    for (let i = 0; i < channels.length; ++i) {
+      const chan = channels[i]
       const event = state.actuator[chan]
 
       if (!event) continue
       this.checkEvent(chan, event, ...restOpts)
     }
+  }
+
+  callChanHandler(channel, args) {
+    const handlers = this.getChanHandlers()
+    handlers[channel] && handlers[channel](...args)
   }
 
   checkEvent(channel, event, options = {}) {
@@ -58,7 +74,7 @@ export class Actuator extends React.Component {
       return
     }
 
-    this.props.on(...event.args)
+    this.callChanHandler(channel, event.args)
   }
 
   componentDidMount() {
@@ -84,9 +100,26 @@ export class Actuator extends React.Component {
 }
 
 Actuator.propTypes = {
-  channel: PropTypes.string.isRequired,
-  on: PropTypes.func.isRequired,
-  deltaError: PropTypes.number
+  channel: PropTypes.string,
+
+  on: PropTypes.oneOfType([
+    // Can be simple event handler of a map of handlers
+    // e.g. { chanOne: ..., chanTwo: ... }
+    PropTypes.func,
+    PropTypes.objectOf(PropTypes.func)
+  ]).isRequired,
+
+  deltaError: PropTypes.number,
+
+  // Always require `channel` prop, unless the map
+  // of listeners wasn't passed with `on` prop.
+  _requireChannel: props => {
+    const isMapOfHandlers = props.on !== null && typeof props.on === 'object'
+
+    if (!props.channel && !isMapOfHandlers) {
+      return new Error('channel is required')
+    }
+  }
 }
 
 Actuator.contextTypes = {

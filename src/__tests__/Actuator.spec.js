@@ -102,4 +102,31 @@ describe('Actuator component', () => {
       expect(eventHandler).not.toHaveBeenCalled()
     })
   })
+
+  it('allows to subscribe to multiple chans at once', () => {
+    const store = createStore()
+
+    const handlerA = jest.fn()
+    const handlerB = jest.fn()
+    const handlerC = jest.fn()
+
+    mount(
+      <Provider store={store}>
+        <Actuator
+          on={{
+            foo: handlerA,
+            bar: handlerB,
+            baz: handlerC
+          }}
+        />
+      </Provider>
+    )
+
+    store.dispatch(actuate('foo'))
+    store.dispatch(actuate('bar'))
+
+    expect(handlerA).toHaveBeenCalled()
+    expect(handlerB).toHaveBeenCalled()
+    expect(handlerC).not.toHaveBeenCalled()
+  })
 })
