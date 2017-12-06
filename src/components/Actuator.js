@@ -52,7 +52,7 @@ export class Actuator extends React.Component {
       return
     }
 
-    this.props.onTrigger(...event.args)
+    this.props.on(...event.args)
   }
 
   componentDidMount() {
@@ -78,7 +78,7 @@ export class Actuator extends React.Component {
 
 Actuator.propTypes = {
   channel: PropTypes.string.isRequired,
-  onTrigger: PropTypes.func.isRequired,
+  on: PropTypes.func.isRequired,
   deltaError: PropTypes.number
 }
 

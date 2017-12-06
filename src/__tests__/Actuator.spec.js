@@ -22,13 +22,13 @@ const createStore = () => {
 }
 
 describe('Actuator component', () => {
-  it('catches an event via onTrigger prop', () => {
+  it('catches an event via on prop', () => {
     const store = createStore()
     const eventHandler = jest.fn()
 
     mount(
       <Provider store={store}>
-        <Actuator channel="foo" onTrigger={eventHandler} />
+        <Actuator channel="foo" on={eventHandler} />
       </Provider>
     )
 
@@ -42,7 +42,7 @@ describe('Actuator component', () => {
 
     mount(
       <Provider store={store}>
-        <Actuator channel="foo" onTrigger={eventHandler} />
+        <Actuator channel="foo" on={eventHandler} />
       </Provider>
     )
 
@@ -61,7 +61,7 @@ describe('Actuator component', () => {
     return delay(30).then(() => {
       mount(
         <Provider store={store}>
-          <Actuator channel="foo" onTrigger={eventHandler} />
+          <Actuator channel="foo" on={eventHandler} />
         </Provider>
       )
 
@@ -78,7 +78,7 @@ describe('Actuator component', () => {
     return delay(30).then(() => {
       mount(
         <Provider store={store}>
-          <Actuator channel="baz" onTrigger={eventHandler} deltaError={100} />
+          <Actuator channel="baz" on={eventHandler} deltaError={100} />
         </Provider>
       )
 
@@ -95,7 +95,7 @@ describe('Actuator component', () => {
     return delay(30).then(() => {
       mount(
         <Provider store={store}>
-          <Actuator channel="bar" onTrigger={eventHandler} deltaError={25} />
+          <Actuator channel="bar" on={eventHandler} deltaError={25} />
         </Provider>
       )
 
