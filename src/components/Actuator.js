@@ -12,11 +12,13 @@ export class Actuator extends React.Component {
   constructor(props, context) {
     super(props, context)
     this.onStateChanged = this.onStateChanged.bind(this)
+
+    this._keyCache = {}
   }
 
   onStateChanged() {
     const event = this.getEvent(this.context.store)
-    event && this.checkEvent(event)
+    event && this.checkEvent(this.props.channel, event)
   }
 
   getEvent(store) {
@@ -26,13 +28,14 @@ export class Actuator extends React.Component {
     return state.actuator[this.props.channel]
   }
 
-  checkEvent(event, options = {}) {
+  checkEvent(channel, event, options = {}) {
     // Compare event keys (they have to be unique)
-    if (this._prevKey && this._prevKey === event.key) {
+    const _prevKey = this._keyCache[channel]
+    if (_prevKey && _prevKey === event.key) {
       return
     }
 
-    this._prevKey = event.key
+    this._keyCache[channel] = event.key
 
     // Special case when the event was dispatched before
     // the mount. If you need to handle cases like
@@ -62,7 +65,7 @@ export class Actuator extends React.Component {
       this._sub = store.subscribe(this.onStateChanged)
       const event = this.getEvent(store)
 
-      event && this.checkEvent(event, { onMount: true })
+      event && this.checkEvent(this.props.channel, event, { onMount: true })
     }
   }
 
