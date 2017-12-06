@@ -42,6 +42,7 @@ Redux Actuator is distributed as an NPM package:
 
 ```
 npm install --save redux-actuator
+# or yarn add redux-actuator
 ```
 
 Here how Redux Actuator is injected into Redux store:
@@ -66,7 +67,7 @@ this talking head:
 
 ![](assets/talking-guy.gif)
 
-In order to do that simply put `<Actuator>` component and specify how events should be handled:
+In order to do that simply put `<Actuator>` component with channel provided.
 
 ```JavaScript
   import { Actuator } from 'redux-actuator'
@@ -80,7 +81,7 @@ In order to do that simply put `<Actuator>` component and specify how events sho
       // Actuator can wrap other components for brevity,
       // or can be used in a self-closing form <Actuator />
       return (
-        <Actuator events={{ say: (phrase) => this.saySomething(phrase) }}>
+        <Actuator channel="talking-guy" on={(phrase) => this.saySomething(phrase)}>
           <div>
             ...
           </div>
@@ -89,38 +90,26 @@ In order to do that simply put `<Actuator>` component and specify how events sho
   }
 ```
 
-How we are ready to trigger actions from the bussiness-logic part of the app:
+Now let's trigger actions from the bussiness-logic part of the app:
 
 ```JavaScript
   import { actuate } from 'redux-actuator'
 
   // First argument is name of the event,
   // the rest is interpreted as event arguments
-  store.dispatch(actuate('say', 'Hola!')
-  store.dispatch(actuate('say', 'Hello!')
+  store.dispatch(actuate('talking-guy', 'Hola!')
+  store.dispatch(actuate('talking-guy', 'Hello!')
 ```
 
-## Using Channels
-In the next example we now have 4 talking heads and we would like to trigger
-`'say'` event for a specific head:
-
-![](assets/talking-guys.gif)
-
-Actuator provides support for channels. Channels can be useful if you'd like to
-distinguish similar events passed for different components:
+**Subscribing to multiple channels.** You can also subscribe to a multiple channels at once using this form:
 
 ```JavaScript
-  // If you don't specify a channel, 'default' will be used
-  <Actuator
-    channel='gustav'
-    events={{ say: (phrase) => this.saySomething(phrase) }} />
-
-
-  import { actuateChannel } from 'redux-actuator'
-
-  // actuateChanell is an action creator-creator
-  const actuateGustav = actuateChannel('gustav')
-  store.dispatch(actuateGustav('say', 'Goeiedag!'))
+  // Note: no need to pass a `channel` prop
+  // Format is { chanOne: handler, chanTwo: ... }
+  <Actuator on={{
+    instantNotification: () => ..., 
+    focusToolbar: () => ...
+   }} />
 ```
 
 ## License
